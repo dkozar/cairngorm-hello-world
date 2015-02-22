@@ -1,0 +1,35 @@
+/* CSS file */
+
+Application {
+	modal-transparency-blur:0;
+}
+
+Button {
+	padding-top:6;
+	padding-bottom:6;
+	padding-left:6;
+	padding-right:6;
+	border-style:outset;
+	corner-radius:0;
+	font-family: Verdana, Tahoma;
+	font-size: 14;
+	font-weight: bold;
+	color: #666666;
+	border-thickness: 3;
+	background-alpha: 1;
+	/*icon: Embed("../images/form_edit.png");*/
+}
+
+Label {
+	font-family: Verdana, Tahoma;
+	font-size: 14;
+	font-weight: bold;
+	color: #666666;
+}
+
+HBox.header {
+	padding-top:6;
+	padding-bottom:6;
+	padding-left:6;
+	padding-right:6;
+}

@@ -1,0 +1,34 @@
+h1. cairngorm-hello-world
+
+h1. Cairngorm Hello World
+
+h2. Author: Danko Kozar, 2008
+
+h2. Demo presenting the best practices in Flex application development, utilizing Cairngorm MVC framework.
+
+"Demo":http://dankokozar.com/flex/cairngorm_demo/
+"Source code browser":http://dankokozar.com/flex/cairngorm_demo/srcview/index.html
+
+h2. Wikipedia on Cairngorm:
+
+"Cairngorm is one of the primary open source frameworks for application architecture in Adobe Flex. It was developed by iteration::two, which was acquired by Macromedia in 2005. It is part of the Adobe Engagement Platform. Adobe Labs features Cairngorm as the architectural framework for Rich Internet Application programmers.
+
+Cairngorm is based on the MVC model. It is specifically designed to facilitate complex state and data synchronization between the client and the server, while keeping the programming of the View layer detached from the data implementation.
+
+The role of the View layer in a Cairngorm application is to throw events and bind to data stored in the Model. Components on the View can bind to Value Objects or other properties in the Model (data) layer.
+
+In a Cairngorm Model, related data are stored in Value Objects (VOs), while simple variables can be stored as direct properties of the ModelLocator class. A static reference to the ModelLocator singleton instance is used by the View layers to locate the required data.
+
+The Controller is the most sophisticated part of the Cairngorm architecture. The Controller layer is implemented as a singleton FrontController. The FrontController instance, which receives every View-generated event, dispatches the events to the assigned Command class based on the event's declared type.
+
+The Command class then processes the event by running the Command class' execute() method, which is an ICommand interface method. The event object may include additional data if required by the developer. The execute() method can update the central Model, as well as invoke a Service class which typically involves communication with a remote server. The IResponder interface, which is also implemented by the Command class, includes onResult and onFault methods to handle responses returned from the invoked remote service.
+
+A Cairngorm application can be programmed to manage any server architecture/schemas."
+
+h2. Resources
+
+* "More":http://dankokozar.com/blog/presentations/introduction-to-cairngorm/
+* "Cairngorm @sourceforge":http://sourceforge.net/adobe/cairngorm/
+* "List of Flex frameworks @Wikipedia":http://en.wikipedia.org/wiki/List_of_Flex_frameworks
+* "Author's homepage":http://dankokozar.com
+* "I’m @DankoKozar on Twitter":https://twitter.com/DankoKozar.

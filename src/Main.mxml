@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" backgroundGradientColors="[#0066FF, #0033CC]" 
+	xmlns:business="business.*" 
+	xmlns:control="control.*"
+	xmlns:view="view.*"
+	xmlns:dkview="com.dankokozar.view.*" 
+	viewSourceURL="srcview/index.html">
+	
+	<mx:Style source="design/styles/css.css"/>
+	
+	<mx:Script>
+		<![CDATA[
+			import events.CGetItemEvent;
+			import events.SelectEvent;
+			import events.CGetAllItemsEvent;
+		
+			/**
+			 * Cairngorm Hello World
+			 * Coded by Danko Kozar
+			 * 05/2008
+			 * www.dankokozar.com
+			 * */
+		
+			import events.CLoginEvent;
+			import com.adobe.cairngorm.control.CairngormEventDispatcher;
+			import dto.LoginDto;
+			import com.dankokozar.events.LoginEvent;
+			import mx.controls.Alert;
+			import model.ModelLocator;
+			import mx.events.SliderEvent;
+			import mx.events.MoveEvent;
+			import mx.core.Container;
+			
+			protected function doLogin(event:LoginEvent):void {
+				// construct dto
+				var dto:LoginDto = new LoginDto(event.userName, event.password);
+				// Cairngorm event
+				var e:events.CLoginEvent = new events.CLoginEvent(dto);
+				CairngormEventDispatcher.getInstance().dispatchEvent(e);
+				//e.dispatch(); // druga mogućnost
+			}
+			
+			protected function doLogout():void {
+				// Cairngorm event
+				var e:events.CLogoutEvent = new events.CLogoutEvent();
+				CairngormEventDispatcher.getInstance().dispatchEvent(e);
+				//e.dispatch(); // druga mogućnost
+			}
+			
+			protected function refreshData():void {
+				var e:CGetAllItemsEvent = new CGetAllItemsEvent();
+				e.dispatch();
+			}
+			
+			protected function onDataSelect(event:SelectEvent):void {
+				var e:CGetItemEvent = new CGetItemEvent(event.id);
+				e.dispatch();
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<!-- ========================================================================== -->
+        
+    <!-- the ServiceLocator where we specify the remote services -->
+    <business:Services id="services" />
+    
+    <!-- front controllers -->
+    <control:AuthController id="authController" />
+    <control:MainController id="mainController" />
+    <!--  -->
+	
+	<mx:ViewStack id="viewStack" width="100%" height="100%" selectedIndex="{ModelLocator.getInstance().selectedPanelIndex}">	
+	
+		<mx:Box width="100%" height="100%" 
+			horizontalAlign="center" 
+			verticalAlign="middle"
+			showEffect="itemShow"
+			hideEffect="itemHide" >
+		
+			<mx:Panel title="Options" horizontalAlign="center" verticalAlign="middle"
+				paddingTop="15" paddingBottom="15" paddingLeft="15" paddingRight="15">
+				
+				<mx:Button label="Login" 
+					width="200" 
+					alpha="1.0"
+					enabled="{ModelLocator.getInstance().loggedInUser == null}"
+					click="{ModelLocator.getInstance().selectedPanelIndex = 1}" />
+				
+				<mx:Button 
+					label="Data" 
+					width="200" 
+					enabled="{ModelLocator.getInstance().loggedInUser != null}" 
+					click="{ModelLocator.getInstance().selectedPanelIndex=2}" />
+					
+				<mx:Button 
+					label="Logout" 
+					width="200" 
+					enabled="{ModelLocator.getInstance().loggedInUser != null}" 
+					click="doLogout()" />
+				
+			</mx:Panel>
+		
+		</mx:Box>
+		
+		<mx:Box width="100%" height="100%" 
+			horizontalAlign="center" 
+			verticalAlign="middle"
+			showEffect="itemShow"
+			hideEffect="itemHide" >
+			
+			<dkview:Login 
+				title="Login [admin/admin]"
+				defaultUserName="admin" defaultPassword="admin"
+				login="doLogin(event)"
+				cancel="{ModelLocator.getInstance().selectedPanelIndex = 0}" 
+				invalid="mx.controls.Alert.show('The data is invalid. Please reenter the data.', 'Invalid data')" />
+				
+				<!--userNameLabel="Korisničko ime:"
+				passwordLabel="Lozinka:"
+				submitButtonText="Loginiraj me"
+				cancelButtonText="Otkaži"
+				userNameValidatorText="Ovo polje je potrebno ispuniti"
+				passwordValidatorText="I ovo polje je potrebno ispuniti"-->
+				
+		</mx:Box>
+		
+		<mx:Box width="100%" height="100%" 
+			horizontalAlign="center" 
+			verticalAlign="middle"
+			showEffect="itemShow"
+			hideEffect="itemHide" >			
+			
+			<view:Data 
+				select="onDataSelect(event)"
+				back="{ModelLocator.getInstance().selectedPanelIndex = 0}"
+				refresh="refreshData()" />
+							
+		</mx:Box>
+		
+	</mx:ViewStack>
+	
+	<!-- Effects -->	
+	<mx:Parallel id="itemShow" >
+		<mx:Move yFrom="{viewStack.height}" yTo="0" duration="700" />
+	</mx:Parallel>
+	<mx:Parallel id="itemHide" >
+		<mx:Move yFrom="0" yTo="{viewStack.height}" duration="700" />
+	</mx:Parallel>
+		
+</mx:Application>

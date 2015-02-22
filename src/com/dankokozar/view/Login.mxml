@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel title="Login" 
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	implements="mx.managers.IFocusManagerComponent"
+	show="setFocus()" >
+	
+	<mx:Metadata>
+		[Event(name="login", type="com.dankokozar.events.LoginEvent")]
+		[Event(name="invalid", type="flash.events.Event")]
+		[Event(name="cancel", type="flash.events.Event")]
+	</mx:Metadata>
+
+	<mx:Script>
+		<![CDATA[
+			import com.dankokozar.events.LoginEvent;
+			import com.adobe.cairngorm.control.CairngormEventDispatcher;
+			import mx.events.ValidationResultEvent;
+		
+			[Bindable] public var userNameLabel:String = "User Name:";
+			[Bindable] public var passwordLabel:String = "Password:";
+			[Bindable] public var userNameValidatorText:String = "This field is required.";
+			[Bindable] public var passwordValidatorText:String = "This field is required.";
+			[Bindable] public var submitButtonText:String = "Login";
+			[Bindable] public var cancelButtonText:String = "Cancel";
+			[Bindable] public var defaultUserName:String = "";
+			[Bindable] public var defaultPassword:String = "";
+			
+			public override function setFocus():void {
+				txtUserName.setFocus();    	
+            }
+			
+			private function validateMe():void{
+				var validUserEvent:ValidationResultEvent = userNameValidator.validate();
+				var validPasswordEvent:ValidationResultEvent = passwordValidator.validate();
+				
+				if (validUserEvent.type == ValidationResultEvent.VALID && validPasswordEvent.type == ValidationResultEvent.VALID){
+					onLogin();
+				} else {
+					onInvalid();
+				}
+			}
+			
+			private function onLogin():void
+			{
+				var e:LoginEvent = new LoginEvent(txtUserName.text, txtPassword.text);
+				dispatchEvent(e);
+			}
+			
+			private function onInvalid():void
+			{
+				var e:Event = new Event("invalid");
+				dispatchEvent(e);
+			}
+			
+			protected function onCancel():void {
+				var e:Event = new Event("cancel");
+				dispatchEvent(e);
+			}
+			
+		]]>
+	</mx:Script>		
+	
+	<mx:Form defaultButton="{submitButton}">
+		<mx:FormItem label="{userNameLabel}">
+			<mx:TextInput id="txtUserName" text="{defaultUserName}" />
+		</mx:FormItem>
+		<mx:FormItem label="{passwordLabel}">
+			<mx:TextInput id="txtPassword" text="{defaultPassword}" displayAsPassword="true" />
+		</mx:FormItem>
+		<mx:FormItem width="100%">
+			<mx:HBox width="100%">
+				<mx:Button id="submitButton" label="{submitButtonText}" click="validateMe()"/>
+				<mx:Button label="{cancelButtonText}" click="onCancel()"/>
+			</mx:HBox>
+		</mx:FormItem>
+	</mx:Form>
+	
+	<mx:StringValidator 
+		id="userNameValidator" 
+		source="{txtUserName}" 
+		property="text" 
+		minLength="1"
+		requiredFieldError="{userNameValidatorText}" />
+	<mx:StringValidator 
+		id="passwordValidator" 
+		source="{txtPassword}" 
+		property="text" 
+		minLength="1" 
+		requiredFieldError="{passwordValidatorText}" />
+	
+</mx:Panel>

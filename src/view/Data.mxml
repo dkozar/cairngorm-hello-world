@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel title="Data" 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	creationComplete="refresh()"
+	minWidth="800"
+	minHeight="600"
+	width="100%"
+	height="100%" >
+	
+	<mx:Metadata>
+		[Event(name="back", type="flash.events.Event")]
+		[Event(name="refresh", type="flash.events.Event")]
+		[Event(name="select", type="events.SelectEvent")]
+	</mx:Metadata>
+
+	<mx:Script>
+		<![CDATA[
+			import events.SelectEvent;
+			import events.CGetAllItemsEvent;
+			import model.ModelLocator;
+			import com.dankokozar.events.LoginEvent;
+			import com.adobe.cairngorm.control.CairngormEventDispatcher;
+			import mx.events.ValidationResultEvent;
+		
+			protected function refresh():void {
+				var e:Event = new Event("refresh");
+				dispatchEvent(e);
+			}
+			
+			protected function onButtonClick():void {
+				var e:Event = new Event("back");
+				dispatchEvent(e);
+			}
+			
+			protected function onChange(e:Event):void {
+				var id:String = DataGrid(e.target).selectedItem.id;
+				var event:SelectEvent = new SelectEvent(id);
+				dispatchEvent(event);
+			}
+				
+		]]>
+	</mx:Script>		
+	
+	<mx:HBox width="100%" horizontalAlign="right" styleName="header" >
+		<mx:Button label="Refresh" click="refresh()" />
+		<mx:Button label="Back" click="onButtonClick()" />
+	</mx:HBox>
+	
+	<mx:Box width="100%" height="100%"
+		paddingBottom="10"
+		paddingTop="10"
+		paddingLeft="10"
+		paddingRight="10">	
+		
+		<mx:DataGrid id="grid" width="100%" height="100%" 
+			dataProvider="{ModelLocator.getInstance().dpItems}"
+			change="onChange(event)" >
+			<mx:columns>
+				<mx:DataGridColumn headerText="ID" dataField="id" width="50" />
+				<mx:DataGridColumn headerText="Naziv" dataField="name" width="200" />
+				<mx:DataGridColumn headerText="Opis" dataField="description" width="300" />
+				<mx:DataGridColumn headerText="Cijena" dataField="price" itemRenderer="view.renderer.RndPrice" width="50" />
+			</mx:columns>
+		</mx:DataGrid>
+		
+	</mx:Box>
+	
+</mx:Panel>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cairngorm:ServiceLocator xmlns:mx="http://www.adobe.com/2006/mxml"
+                          xmlns:cairngorm="com.adobe.cairngorm.business.*" >
+     
+    <mx:Script>
+    	<![CDATA[
+    		import mx.controls.Alert;
+    		import model.ModelLocator;
+    		import mx.rpc.events.ResultEvent;
+    	]]>
+    </mx:Script>
+
+	<!-- adapt web service URLs to your needs :) -->
+	
+	<mx:WebService 
+		id="publicWebService"
+		wsdl="http://dankokozar.com/flex/cairngorm-hello-world/Public.asmx?WSDL"
+		showBusyCursor="true"
+		result="event.token.resultHandler(event)"
+		fault="event.token.faultHandler(event)" >
+	</mx:WebService>
+     
+	<mx:WebService 
+		id="mainWebService"
+		wsdl="http://dankokozar.com/flex/cairngorm-hello-world/Main.asmx?WSDL"
+		showBusyCursor="true"
+		result="event.token.resultHandler(event)"
+		fault="event.token.faultHandler(event)" >
+	</mx:WebService>
+
+</cairngorm:ServiceLocator>
