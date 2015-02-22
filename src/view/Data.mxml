@@ -57,9 +57,9 @@
 			change="onChange(event)" >
 			<mx:columns>
 				<mx:DataGridColumn headerText="ID" dataField="id" width="50" />
-				<mx:DataGridColumn headerText="Naziv" dataField="name" width="200" />
-				<mx:DataGridColumn headerText="Opis" dataField="description" width="300" />
-				<mx:DataGridColumn headerText="Cijena" dataField="price" itemRenderer="view.renderer.RndPrice" width="50" />
+				<mx:DataGridColumn headerText="Name" dataField="name" width="200" />
+				<mx:DataGridColumn headerText="Description" dataField="description" width="300" />
+				<mx:DataGridColumn headerText="Price" dataField="price" itemRenderer="view.renderer.RndPrice" width="50" />
 			</mx:columns>
 		</mx:DataGrid>
 		
