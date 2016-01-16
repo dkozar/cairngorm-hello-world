@@ -4,7 +4,9 @@ h1. Cairngorm Hello World
 
 h2. Author: "Danko Kozar":http://dankokozar.com, &copy; 2008
 
-h2. Demo presenting the best practices in Flex application development, utilizing Cairngorm MVC framework.
+h2. Demo presenting best practices in Flex application development, utilizing Cairngorm MVC framework.
+
+<img src="http://dankokozar.com/images/cairngorm-demo-800.png"></img>
 
 "Demo":http://dankokozar.com/flex/cairngorm_demo/
 "Source code browser":http://dankokozar.com/flex/cairngorm_demo/srcview/index.html
